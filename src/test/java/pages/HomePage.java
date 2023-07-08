@@ -18,9 +18,6 @@ public class HomePage extends BasePage{
 
     @FindBy(css = ".post-feed-img")
     WebElement userPost;
-    public void openSiteURl() {
-        driver.get(URL);
-    }
     public void clickUsername() {
         clickElement(userName);
     }

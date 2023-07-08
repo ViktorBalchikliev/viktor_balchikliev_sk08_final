@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage {
 
-    public final String loginURL = "http://training.skillo-bg.com:4200/users/login";
-
     @FindBy(name = "usernameOrEmail")
     WebElement usernameField;
 

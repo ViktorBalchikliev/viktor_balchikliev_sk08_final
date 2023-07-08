@@ -26,10 +26,12 @@ public class PostModal extends BasePage{
         wait.until(ExpectedConditions.visibilityOf(modalDialog));
     }
     public void likePost(){
+        wait.until(ExpectedConditions.elementToBeClickable(likeButton));
         clickElement(likeButton);
     }
 
     public void dislikePost(){
+        wait.until(ExpectedConditions.elementToBeClickable(dislikeButton));
         clickElement(dislikeButton);
     }
 }
