@@ -14,9 +14,15 @@ public class HomePage extends BasePage{
         PageFactory.initElements(driver, this);
     }
     @FindBy(css = ".post-user")
+    WebElement userName;
+
+    @FindBy(css = ".post-feed-img")
     WebElement userPost;
     public void openSiteURl() {
         driver.get(URL);
+    }
+    public void clickUsername() {
+        clickElement(userName);
     }
     public void clickPost() {
         clickElement(userPost);

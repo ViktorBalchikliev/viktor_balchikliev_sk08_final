@@ -4,8 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class Login extends BasePage {
+public class LoginPage extends BasePage {
 
     public final String loginURL = "http://training.skillo-bg.com:4200/users/login";
 
@@ -15,7 +16,7 @@ public class Login extends BasePage {
     @FindBy(name = "password")
     WebElement passwordField;
 
-    @FindBy(name= "rememberMe")
+    @FindBy(css= ".remember-me-button")
     WebElement rememberButton;
 
     @FindBy(id = "sign-in-button")
@@ -39,13 +40,11 @@ public class Login extends BasePage {
     public void clickSignIn() {
         clickElement(signInBtn);
     }
-    public String getSignInHeaderText() {
-        return returnText(signInHeader);
-    }
     public void login(String username, String password) {
         enterUsername(username);
         enterPassword(password);
+        wait.until(ExpectedConditions.elementToBeClickable(rememberButton));
+        clickRememberMe();
         clickSignIn();
     }
-
 }
