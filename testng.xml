@@ -6,4 +6,9 @@
             <class name="tests.GuestTests"></class>
         </classes>
     </test>
+    <test name="User Tests">
+        <classes>
+            <class name="tests.UserTests"></class>
+        </classes>
+    </test>
 </suite>

@@ -16,4 +16,4 @@ Testing focus: iskillo platform
         3) Dislike a post as a guest
             ==> the last test fails and saves a screenshot in src/resources/screenshots as requested.
 
-    2. User Profile Tests
+    2. User Tests
