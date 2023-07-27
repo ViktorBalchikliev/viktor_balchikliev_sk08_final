@@ -9,6 +9,8 @@ import java.time.Duration;
 
 public class BasePage {
 
+    public String URLlogin = "http://training.skillo-bg.com/users/login";
+    public String URLredirect = "http://training.skillo-bg.com:4200/users/login";
     protected WebDriver driver;
     protected WebDriverWait wait;
 

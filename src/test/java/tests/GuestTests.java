@@ -22,7 +22,6 @@ import pages.ProfilePage;
 public class GuestTests {
 
     protected WebDriver driver;
-    protected final String URL = "http://training.skillo-bg.com/posts/all";
     public static final String RESOURCES_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
     public static final String SCREENSHOT_DIR = RESOURCES_DIR.concat("screenshots" + File.separator);
 
@@ -56,10 +55,10 @@ public class GuestTests {
     @Test
     public void likePost() {
         System.out.println("1. Navigate to main page as a guest user.");
-        driver.get(URL);
+        HomePage homePage = new HomePage(driver);
+        homePage.getURL();
 
         System.out.println("2. Click on the first user's post to open his post.");
-        HomePage homePage = new HomePage(driver);
         homePage.clickPost();
 
         System.out.println("3. Wait for the post modal to appear");
@@ -71,19 +70,19 @@ public class GuestTests {
 
         System.out.println("5. Confirm that you are redirected to the login page");
         BasePage basePage = new BasePage(driver);
-        basePage.verifyURL("http://training.skillo-bg.com/users/login");
+        basePage.verifyURL(basePage.URLredirect);
         String currentURL = driver.getCurrentUrl();
-        String expectedURL = "http://training.skillo-bg.com/users/login";
+        String expectedURL = "http://training.skillo-bg.com:4200/users/login";
         Assert.assertEquals(currentURL, expectedURL, "As a guest, you should be redirected to the Login Page when trying to like a post.");
     }
 
     @Test
     public void dislikePost() {
         System.out.println("1. Navigate to main page as a guest user.");
-        driver.get(URL);
+        HomePage homePage = new HomePage(driver);
+        homePage.getURL();
 
         System.out.println("2. Click on the first user's post to open his post.");
-        HomePage homePage = new HomePage(driver);
         homePage.clickPost();
 
         System.out.println("3. Wait for the post modal to appear");
@@ -95,9 +94,9 @@ public class GuestTests {
 
         System.out.println("5. Confirm that you are redirected to the login page");
         BasePage basePage = new BasePage(driver);
-        basePage.verifyURL("http://training.skillo-bg.com/users/login");
+        basePage.verifyURL(basePage.URLredirect);;
         String currentURL = driver.getCurrentUrl();
-        String expectedURL = "http://training.skillo-bg.com/users/login";
+        String expectedURL = "http://training.skillo-bg.com:4200/users/login";
         Assert.assertEquals(currentURL, expectedURL, "As a guest, you should be redirected to the Login Page when trying to dislike a post.");
     }
 
