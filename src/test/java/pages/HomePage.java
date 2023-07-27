@@ -13,10 +13,10 @@ public class HomePage extends BasePage{
         super(driver);
         PageFactory.initElements(driver, this);
     }
-    @FindBy(css = ".post-user")
+    @FindBy(css = ".post-user:first-of-type")
     WebElement userName;
 
-    @FindBy(css = ".post-feed-img")
+    @FindBy(css = ".post-feed-img:first-of-type")
     WebElement userPost;
 
     public void getURL() {
