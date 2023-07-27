@@ -10,7 +10,6 @@ import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.*;
 
@@ -30,11 +29,9 @@ public class UserTests {
     public static final String SCREENSHOT_DIR = RESOURCES_DIR.concat("screenshots" + File.separator);
     public static final String REPORT_DIR = "target" + File.separator + "surefire-reports" + File.separator;
 
+    protected String username = "tester_viktor";
+    protected String password = "test1234";
 
-    @DataProvider(name = "loginData")
-    public Object[][] loginData() {
-        return new Object[][]{{"tester_viktor", "test1234"}};
-    }
     @BeforeMethod
     public void setupDriver() throws IOException {
         WebDriverManager.chromedriver().setup();
@@ -45,83 +42,68 @@ public class UserTests {
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-    }
 
-    @Test (dataProvider = "loginData")
-    public void commentPost(String username, String password) {
-        System.out.println("1. Navigate to the login page");
+        System.out.println("Navigate to the login page and login with valid user data");
+
         driver.get(URL);
 
-        System.out.println("2. Login with the user data provided");
         Header header = new Header(driver);
         header.clickLogin();
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(username, password);
+    }
 
-        System.out.println("3. Click on the first user's post to open his post.");
+    @Test
+    public void commentPost() {
+
+        System.out.println("1. Click on the first user's post to open his post.");
         HomePage homePage = new HomePage(driver);
         homePage.clickPost();
 
-        System.out.println("4. Wait for the post modal to appear.");
+        System.out.println("2. Wait for the post modal to appear.");
         PostModal postModal = new PostModal(driver);
         postModal.waitForDialogAppear();
 
-        System.out.println("5. Comment on the post.");
+        System.out.println("3. Comment on the post.");
         postModal.commentPost();
 
-        System.out.println("6. Confirm that the comment is displayed");
+        System.out.println("4. Confirm that the comment is displayed");
         WebElement newComment = postModal.getComment();
         Assert.assertTrue(newComment.isDisplayed(), "The comment is not displayed");
     }
-    @Test (dataProvider = "loginData")
-    public void likePostPopup(String username, String password) {
-        System.out.println("1. Navigate to the login page");
-        driver.get(URL);
+    @Test
+    public void likePostPopup() {
 
-        System.out.println("2. Login with the user data provided");
-        Header header = new Header(driver);
-        header.clickLogin();
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login(username, password);
-
-        System.out.println("3. Click on the first user's post to open his post.");
+        System.out.println("1. Click on the first user's post to open his post.");
         HomePage homePage = new HomePage(driver);
         homePage.clickPost();
 
-        System.out.println("4. Wait for the post modal to appear.");
+        System.out.println("2. Wait for the post modal to appear.");
         PostModal postModal = new PostModal(driver);
         postModal.waitForDialogAppear();
 
-        System.out.println("4. Like the post");
+        System.out.println("3. Like the post");
         postModal.likePost();
 
-        System.out.println("5. Check if the pop-up confirmation has appeared");
+        System.out.println("4. Check if the pop-up confirmation has appeared");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         By popupLocator = By.id("toast-container");
         WebElement popupElement = wait.until(ExpectedConditions.visibilityOfElementLocated(popupLocator));
         Assert.assertTrue(popupElement.isDisplayed(), "The pop-up confirmation does not appear.");
     }
 
-    @Test (dataProvider = "loginData")
-    public void followUser(String username, String password) {
-        System.out.println("1. Navigate to the login page");
-        driver.get(URL);
+    @Test
+    public void followUser() {
 
-        System.out.println("2. Login with the user data provided");
-        Header header = new Header(driver);
-        header.clickLogin();
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login(username, password);
-
-        System.out.println("3. Click on the first user's nickname to access his profile.");
+        System.out.println("1. Click on the first user's nickname to access his profile.");
         HomePage homePage = new HomePage(driver);
         homePage.clickUsername();
 
-        System.out.println("4. Follow the user.");
+        System.out.println("2. Follow the user.");
         ProfilePage profilePage = new ProfilePage(driver);
         profilePage.followUser();
 
-        System.out.println("5. Confirm the unfollow button is present.");
+        System.out.println("3. Confirm the unfollow button is present.");
         WebElement unfollowButton = driver.findElement(By.xpath(".//button[contains(text(), 'Unfollow')]"));
         Assert.assertTrue(unfollowButton.isDisplayed());
     }
