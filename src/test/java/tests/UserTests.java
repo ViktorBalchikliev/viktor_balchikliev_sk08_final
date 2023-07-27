@@ -60,13 +60,10 @@ public class UserTests {
         postModal.waitForDialogAppear();
 
         System.out.println("5. Comment on the post.");
-        WebElement commentField = driver.findElement(By.xpath("//input[@placeholder='Comment here']"));
-        commentField.click();
-        commentField.sendKeys("Testing comment.");
-        commentField.sendKeys(Keys.RETURN);
+        postModal.commentPost();
 
         System.out.println("6. Confirm that the comment is displayed");
-        WebElement newComment = driver.findElement(By.xpath(".//*[contains(text(), 'Testing comment.')]"));
+        WebElement newComment = postModal.getComment();
         Assert.assertTrue(newComment.isDisplayed(), "The comment is not displayed");
     }
     @Test (dataProvider = "loginData")
