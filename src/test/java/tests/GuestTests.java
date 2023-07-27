@@ -1,5 +1,6 @@
 package tests;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -24,9 +25,14 @@ public class GuestTests {
     protected WebDriver driver;
     public static final String RESOURCES_DIR = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
     public static final String SCREENSHOT_DIR = RESOURCES_DIR.concat("screenshots" + File.separator);
+    public static final String REPORT_DIR = "target" + File.separator + "surefire-reports" + File.separator;
 
     @BeforeMethod
-    public void setupDriver() {
+    public void setupDriver() throws IOException {
+        WebDriverManager.chromedriver().setup();
+        cleanDirectory(SCREENSHOT_DIR);
+        cleanDirectory(REPORT_DIR);
+
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
@@ -116,6 +122,16 @@ public class GuestTests {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+    private void cleanDirectory(String directoryPath) throws IOException {
+        File directory = new File(directoryPath);
+        FileUtils.cleanDirectory(directory);
+        String[] fileList = directory.list();
+        if (fileList != null && fileList.length == 0) {
+            System.out.printf("All files are deleted in Directory: %s%n", directoryPath);
+        } else {
+            System.out.printf("Unable to delete the files in Directory:%s%n", directoryPath);
         }
     }
 }
