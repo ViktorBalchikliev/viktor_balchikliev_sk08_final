@@ -7,6 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ProfilePage extends BasePage{
 
+    public String URLnotfound = "http://training.skillo-bg.com:4200/not-found";
+
     @FindBy(css = ".profile-edit-btn")
     WebElement followButton;
 
